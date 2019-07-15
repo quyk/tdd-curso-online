@@ -1,7 +1,7 @@
 ﻿using CursoOnline.Dados.Contextos;
 using CursoOnline.Dados.Repositorios;
 using CursoOnline.Dominio._Base;
-using CursoOnline.Dominio.Entidades.Cursos;
+using CursoOnline.Dominio.Cursos;
 using CursoOnline.Dominio.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +16,7 @@ namespace CursoOnline.IoC
             services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(configuration["ConnectionString"]));
             services.AddScoped(typeof(IRepositorio<>), typeof(RepositorioBase<>));
             services.AddScoped(typeof(ICursoRepositorio), typeof(CursoRepositorio));
-            services.AddScoped<ArmazenadorCurso>();
+            services.AddScoped<ArmazenadorDeCurso>();
         }
     }
 }
