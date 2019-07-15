@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoOnline.Web", "src\Curs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoOnline.Dados", "src\CursoOnline.Dados\CursoOnline.Dados.csproj", "{8E25D410-E099-4FC0-9FA0-48CFC6663B4F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CursoOnline.IoC", "src\CursoOnline.IoC\CursoOnline.IoC.csproj", "{039029F2-2629-4F00-BC13-73A00D902CB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8E25D410-E099-4FC0-9FA0-48CFC6663B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E25D410-E099-4FC0-9FA0-48CFC6663B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E25D410-E099-4FC0-9FA0-48CFC6663B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{039029F2-2629-4F00-BC13-73A00D902CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{039029F2-2629-4F00-BC13-73A00D902CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{039029F2-2629-4F00-BC13-73A00D902CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{039029F2-2629-4F00-BC13-73A00D902CB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
