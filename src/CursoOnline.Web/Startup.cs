@@ -1,4 +1,5 @@
-﻿using CursoOnline.IoC;
+﻿using CursoOnline.Dominio._Base;
+using CursoOnline.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,14 @@ namespace CursoOnline.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.Use(async (context, next) =>
+            {
+                await next.Invoke();
+
+                var unitOfWorks = (IUnitOfWorks)context.RequestServices.GetService(typeof(IUnitOfWorks));
+                await unitOfWorks.Commit();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
