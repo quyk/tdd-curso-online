@@ -14,7 +14,7 @@ namespace CursoOnline.Dominio.Test.Cursos
     {
         private readonly CursoDto _cursoDto;
         private readonly Mock<ICursoRepositorio> _cursoRepositorioMock;
-        private readonly ArmazenadorDeCurso _armazenadorCurso;
+        private readonly ArmazenadorDeCurso _armazenadorDeCurso;
 
         public ArmazenadorCursoTest()
         {
@@ -30,15 +30,13 @@ namespace CursoOnline.Dominio.Test.Cursos
             };
 
             _cursoRepositorioMock = new Mock<ICursoRepositorio>();
-            _armazenadorCurso = new ArmazenadorDeCurso(_cursoRepositorioMock.Object);
+            _armazenadorDeCurso = new ArmazenadorDeCurso(_cursoRepositorioMock.Object);
         }
 
         [Fact]
         public void DeveAdicionarCurso()
         {
-            _armazenadorCurso.Armazenar(_cursoDto);
-
-            //cursoRepositorioMock.Verify(r => r.Adicionar(It.IsAny<Curso>()));
+            _armazenadorDeCurso.Armazenar(_cursoDto);
             _cursoRepositorioMock.Verify(r => r.Adicionar(
                 It.Is<Curso>(
                     x => x.Nome == _cursoDto.Nome && x.Descricao == _cursoDto.Descricao
@@ -50,16 +48,16 @@ namespace CursoOnline.Dominio.Test.Cursos
         public void NaoDeveInformarPublicoAlvoInvalido()
         {
             _cursoDto.PublicoAlvo = "Medico";
-            Assert.Throws<ExcecaoDeDominio>(() => _armazenadorCurso.Armazenar(_cursoDto)).ComMensagem(Resource.PublicoAlvoInvalido);
+            Assert.Throws<ExcecaoDeDominio>(() => _armazenadorDeCurso.Armazenar(_cursoDto)).ComMensagem(Resource.PublicoAlvoInvalido);
         }
 
         [Fact]
         public void NaoDeveAdicionarCursoComNomeExistente()
         {
-            var cursoExistente = CursoBuilder.Instancia().ComNome(_cursoDto.Nome).Build();
+            var cursoExistente = CursoBuilder.Instancia().ComId(432).ComNome(_cursoDto.Nome).Build();
             _cursoRepositorioMock.Setup(r => r.ObterPeloNome(_cursoDto.Nome)).Returns(cursoExistente);
 
-            Assert.Throws<ExcecaoDeDominio>(() => _armazenadorCurso.Armazenar(_cursoDto)).ComMensagem(Resource.CursoExistente);
+            Assert.Throws<ExcecaoDeDominio>(() => _armazenadorDeCurso.Armazenar(_cursoDto)).ComMensagem(Resource.CursoExistente);
         }
 
         [Fact]
@@ -70,7 +68,7 @@ namespace CursoOnline.Dominio.Test.Cursos
 
             _cursoRepositorioMock.Setup(x => x.ObterPorId(_cursoDto.Id)).Returns(curso);
 
-            _armazenadorCurso.Armazenar(_cursoDto);
+            _armazenadorDeCurso.Armazenar(_cursoDto);
 
             Assert.Equal(_cursoDto.Nome, curso.Nome);
             Assert.Equal(_cursoDto.Valor, curso.Valor);
@@ -85,7 +83,7 @@ namespace CursoOnline.Dominio.Test.Cursos
 
             _cursoRepositorioMock.Setup(x => x.ObterPorId(_cursoDto.Id)).Returns(curso);
 
-            _armazenadorCurso.Armazenar(_cursoDto);
+            _armazenadorDeCurso.Armazenar(_cursoDto);
 
             _cursoRepositorioMock.Verify(v => v.Adicionar(It.IsAny<Curso>()), Times.Never);
         }
