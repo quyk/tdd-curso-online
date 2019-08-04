@@ -21,8 +21,8 @@ namespace CursoOnline.Dominio.Entidades.Cursos
             var cursoExistente = _cursoRepositorio.ObterPeloNome(cursoDto.Nome);
 
             ValidadorDeRegra.Novo()
-                .Quando(cursoExistente != null, "Nome do curso já consta no Banco de Dados.")
-                .Quando(!Enum.TryParse<PublicoAlvo>(cursoDto.PublicoAlvo, out var publicoAlvo), "Publico Alvo inválido")
+                .Quando(cursoExistente != null, Resource.CursoExistente)
+                .Quando(!Enum.TryParse<PublicoAlvo>(cursoDto.PublicoAlvo, out var publicoAlvo), Resource.PublicoAlvoInvalido)
                 .DispararExcessaoSeExistir();
 
             var curso = new Curso(cursoDto.Nome, cursoDto.CargaHoraria, publicoAlvo, cursoDto.Valor, cursoDto.Descricao);

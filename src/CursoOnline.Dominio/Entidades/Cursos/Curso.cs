@@ -18,9 +18,9 @@ namespace CursoOnline.Dominio.Entidades.Cursos
         public Curso(string nome, double cargaHoraria, PublicoAlvo publicoAlvo, double valor, string descricao)
         {
             ValidadorDeRegra.Novo()
-                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
-                .Quando(cargaHoraria < 1, "Carga horaria inválida!")
-                .Quando(valor < 1, "Valor inválido")
+                .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
+                .Quando(cargaHoraria < 1, Resource.CargaHorariaInvalida)
+                .Quando(valor < 1, Resource.ValorInvalido)
                 .DispararExcessaoSeExistir();
 
             Nome = nome;
@@ -33,7 +33,7 @@ namespace CursoOnline.Dominio.Entidades.Cursos
         public void AlterarNome(string nome)
         {
             ValidadorDeRegra.Novo()
-                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
+                .Quando(string.IsNullOrEmpty(nome), Resource.NomeInvalido)
                 .DispararExcessaoSeExistir();
 
             Nome = nome;
@@ -42,7 +42,7 @@ namespace CursoOnline.Dominio.Entidades.Cursos
         public void AlterarCargaHoraria(double cargaHoraria)
         {
             ValidadorDeRegra.Novo()
-               .Quando(cargaHoraria < 1, "Carga horaria inválida!")
+               .Quando(cargaHoraria < 1, Resource.CargaHorariaInvalida)
                .DispararExcessaoSeExistir();
 
             CargaHoraria = cargaHoraria;
@@ -51,7 +51,7 @@ namespace CursoOnline.Dominio.Entidades.Cursos
         public void AlterarValor(double valor)
         {
             ValidadorDeRegra.Novo()
-                .Quando(valor < 1, "Valor inválido")
+                .Quando(valor < 1, Resource.ValorInvalido)
                 .DispararExcessaoSeExistir();
 
             Valor = valor;
