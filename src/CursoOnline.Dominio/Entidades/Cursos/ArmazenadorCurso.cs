@@ -26,7 +26,18 @@ namespace CursoOnline.Dominio.Entidades.Cursos
                 .DispararExcessaoSeExistir();
 
             var curso = new Curso(cursoDto.Nome, cursoDto.CargaHoraria, publicoAlvo, cursoDto.Valor, cursoDto.Descricao);
-            _cursoRepositorio.Adicionar(curso);
+
+            if (cursoDto.Id > 0)
+            {
+                curso = _cursoRepositorio.ObterPorId(cursoDto.Id);
+                curso.AlterarNome(cursoDto.Nome);
+                curso.AlterarValor(cursoDto.Valor);
+                curso.AlterarCargaHoraria(cursoDto.CargaHoraria);
+            }
+            else
+            {
+                _cursoRepositorio.Adicionar(curso);
+            }
         }
     }
 }
