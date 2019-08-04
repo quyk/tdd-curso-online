@@ -14,6 +14,7 @@ namespace CursoOnline.Dominio.Entidades.Cursos
 
 
         private Curso() { }
+
         public Curso(string nome, double cargaHoraria, PublicoAlvo publicoAlvo, double valor, string descricao)
         {
             ValidadorDeRegra.Novo()
@@ -27,6 +28,33 @@ namespace CursoOnline.Dominio.Entidades.Cursos
             PublicoAlvo = publicoAlvo;
             Valor = valor;
             Descricao = descricao;
+        }
+
+        public void AlterarNome(string nome)
+        {
+            ValidadorDeRegra.Novo()
+                .Quando(string.IsNullOrEmpty(nome), "Nome inválido")
+                .DispararExcessaoSeExistir();
+
+            Nome = nome;
+        }
+
+        public void AlterarCargaHoraria(double cargaHoraria)
+        {
+            ValidadorDeRegra.Novo()
+               .Quando(cargaHoraria < 1, "Carga horaria inválida!")
+               .DispararExcessaoSeExistir();
+
+            CargaHoraria = cargaHoraria;
+        }
+
+        public void AlterarValor(double valor)
+        {
+            ValidadorDeRegra.Novo()
+                .Quando(valor < 1, "Valor inválido")
+                .DispararExcessaoSeExistir();
+
+            Valor = valor;
         }
     }
 }
