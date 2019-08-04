@@ -1,6 +1,6 @@
 ﻿using Bogus;
 using CursoOnline.Dominio._Base;
-using CursoOnline.Dominio.DTO;
+using CursoOnline.Dominio.Cursos;
 using CursoOnline.Dominio.Entidades.Cursos;
 using CursoOnline.Dominio.Interface;
 using CursoOnline.Dominio.Test.Builders;
@@ -14,7 +14,7 @@ namespace CursoOnline.Dominio.Test.Cursos
     {
         private readonly CursoDto _cursoDto;
         private readonly Mock<ICursoRepositorio> _cursoRepositorioMock;
-        private readonly ArmazenadorCurso _armazenadorCurso;
+        private readonly ArmazenadorDeCurso _armazenadorCurso;
 
         public ArmazenadorCursoTest()
         {
@@ -30,7 +30,7 @@ namespace CursoOnline.Dominio.Test.Cursos
             };
 
             _cursoRepositorioMock = new Mock<ICursoRepositorio>();
-            _armazenadorCurso = new ArmazenadorCurso(_cursoRepositorioMock.Object);
+            _armazenadorCurso = new ArmazenadorDeCurso(_cursoRepositorioMock.Object);
         }
 
         [Fact]
@@ -75,6 +75,19 @@ namespace CursoOnline.Dominio.Test.Cursos
             Assert.Equal(_cursoDto.Nome, curso.Nome);
             Assert.Equal(_cursoDto.Valor, curso.Valor);
             Assert.Equal(_cursoDto.CargaHoraria, curso.CargaHoraria);
+        }
+
+        [Fact]
+        public void NaoDeveAdicionarNoRepositorioQuandoCursoJaExiste()
+        {
+            _cursoDto.Id = 233;
+            var curso = CursoBuilder.Instancia().Build();
+
+            _cursoRepositorioMock.Setup(x => x.ObterPorId(_cursoDto.Id)).Returns(curso);
+
+            _armazenadorCurso.Armazenar(_cursoDto);
+
+            _cursoRepositorioMock.Verify(v => v.Adicionar(It.IsAny<Curso>()), Times.Never);
         }
     }
 }
